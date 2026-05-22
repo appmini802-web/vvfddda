@@ -49,6 +49,7 @@ export default function Home({ userId, userData, onReward }: HomeProps) {
 
   const rewardBlockId = import.meta.env.VITE_ADSGRAM_BLOCK_ID;
   const isSetup = rewardBlockId && rewardBlockId !== '' && rewardBlockId !== 'xxxx-xxxx-xxxx-xxxx';
+  const isInTelegram = !!(window.Telegram?.WebApp?.initData);
 
   // تایمر cooldown
   useEffect(() => {
@@ -91,7 +92,15 @@ export default function Home({ userId, userData, onReward }: HomeProps) {
 
   const onAdsgramError = useCallback((result: unknown) => {
     console.error('Adsgram error:', result);
-    setError('تبلیغ لغو شد یا خطایی رخ داد.');
+    const r = result as any;
+    // خطاهای رایج Adsgram
+    if (r?.description?.includes('Telegram')) {
+      setError('تبلیغات فقط داخل تلگرام نمایش داده می‌شود.');
+    } else if (r?.state === 'load') {
+      setError('اسکریپت تبلیغات لود نشده. لطفاً صفحه را رفرش کنید.');
+    } else {
+      setError('تبلیغ لغو شد یا خطایی رخ داد.');
+    }
     setIsPlaying(false);
   }, []);
 
@@ -169,6 +178,11 @@ export default function Home({ userId, userData, onReward }: HomeProps) {
           {!isSetup && (
             <div className="absolute top-0 right-0 bg-orange-500 text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl z-10">
               حالت آزمایشی
+            </div>
+          )}
+          {isSetup && !isInTelegram && (
+            <div className="absolute top-0 right-0 bg-blue-500 text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl z-10">
+              فقط در تلگرام
             </div>
           )}
           <div className="mb-6 mt-2">
