@@ -1,0 +1,29 @@
+{
+  "users": {
+    "test_user_999": {
+      "id": "test_user_999",
+      "balance": 500,
+      "tasks_completed": [],
+      "referrals_count": 0,
+      "referrer_id": null,
+      "updated_at": "2026-05-21T16:03:35.005Z"
+    },
+    "debug_user_123": {
+      "id": "debug_user_123",
+      "balance": 0,
+      "tasks_completed": [],
+      "referrals_count": 0,
+      "referrer_id": null,
+      "updated_at": "2026-05-21T16:03:24.001Z"
+    }
+  },
+  "global_settings": {
+    "1": {
+      "id": 1,
+      "exchange_rate": 10000,
+      "min_withdraw": 50000,
+      "dollar_rate": 5
+    }
+  },
+  "withdrawals": {}
+}
